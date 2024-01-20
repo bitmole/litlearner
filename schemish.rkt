@@ -35,3 +35,9 @@
     (cond
       ((< x y) x)
       (else (remainder (- x y) y)))))
+
+(define add
+  (lambda (n m)
+    (cond
+      ((zero? m) n)
+      (else (add1 (add n (sub1 m)))))))
