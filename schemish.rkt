@@ -29,3 +29,9 @@
     (cond
       ((< x 0) (- 0 x))
       (else x))))
+
+(define remainder
+  (lambda (x y)
+    (cond
+      ((< x y) x)
+      (else (remainder (- x y) y)))))
