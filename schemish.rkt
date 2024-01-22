@@ -41,3 +41,8 @@
     (cond
       ((zero? m) n)
       (else (add1 (add n (sub1 m)))))))
+
+(define line
+  (lambda (x)
+    (lambda (theta)
+      (+ (* (ref theta 0) x) (ref theta 1)))))
