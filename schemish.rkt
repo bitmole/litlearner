@@ -52,3 +52,19 @@
     (cond
       ((scalar? t) 0)
       (else (add1 (trank (tref t 0)))))))
+
+(define tshape
+  (lambda (t)
+    (cond 
+      ((scalar? t) '())
+      (else (cons (tlen t) (tshape (tref t 0)))))))
+
+(define lproduct
+  (lambda (l)
+    (cond
+      ((empty? l) 1)
+      (else (* (car l) (lproduct (cdr l)))))))
+
+(define nscalars
+  (lambda (t)
+    (lproduct (tshape t))))
