@@ -46,3 +46,9 @@
   (lambda (x)
     (lambda (theta)
       (+ (* (ref theta 0) x) (ref theta 1)))))
+
+(define nestcnt
+  (lambda (t)
+    (cond
+      ((scalar? t) 0)
+      (else (add1 (nestcnt (tref t 0)))))))
