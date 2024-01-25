@@ -1,8 +1,8 @@
 #lang racket
 (require malt)
 
+; warmup
 (define pie 3.14)
-
 (define a-radius 8.4)
 
 (define an-area
@@ -30,6 +30,7 @@
       ((< x 0) (- 0 x))
       (else x))))
 
+; warmup recursion
 (define remainder
   (lambda (x y)
     (cond
@@ -42,29 +43,35 @@
       ((zero? m) n)
       (else (add1 (add n (sub1 m)))))))
 
+; on to serious business:
+; give us a line function in which we need to customize weight and bias 
 (define line
   (lambda (x)
     (lambda (theta)
       (+ (* (ref theta 0) x) (ref theta 1)))))
 
-(define trank
+; rank of tensor
+(define rank
   (lambda (t)
     (cond
       ((scalar? t) 0)
-      (else (add1 (trank (tref t 0)))))))
+      (else (add1 (rank (tref t 0)))))))
 
-(define tshape
+; shape of tensor
+(define shape
   (lambda (t)
     (cond 
       ((scalar? t) '())
-      (else (cons (tlen t) (tshape (tref t 0)))))))
+      (else (cons (tlen t) (shape (tref t 0)))))))
 
-(define lproduct
+; product of list members
+(define product
   (lambda (l)
     (cond
       ((empty? l) 1)
-      (else (* (car l) (lproduct (cdr l)))))))
+      (else (* (car l) (product (cdr l)))))))
 
+; we can use tensor shape to get the number of scalars
 (define nscalars
   (lambda (t)
-    (lproduct (tshape t))))
+    (product (shape t))))
