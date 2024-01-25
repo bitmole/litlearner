@@ -53,9 +53,13 @@
 ; rank of tensor
 (define rank
   (lambda (t)
+    (ranked t 0)))
+
+(define ranked
+  (lambda (t a)
     (cond
-      ((scalar? t) 0)
-      (else (add1 (rank (tref t 0)))))))
+      ((scalar? t) a)
+      (else (ranked (tref t 0) (add1 a))))))
 
 ; shape of tensor
 (define shape
