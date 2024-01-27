@@ -79,3 +79,14 @@
 (define nscalars
   (lambda (t)
     (product (shape t))))
+
+; let's sum up a tensor-1
+(define sum-1
+  (lambda (t)
+    (summed t (sub1 (tlen t)) 0.0)))
+
+(define summed
+  (lambda (t i a)
+    (cond
+      ((< i 0) a)
+      (else (summed t (sub1 i) (+ a (tref t i)))))))
