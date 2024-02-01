@@ -10,35 +10,35 @@
      (* a-radius a-radius)))
 
 (define area-of-circle
-  (lambda (r)
+  (λ (r)
     (* pie
        (* r r))))
 
 (define area-of-rectangle
-  (lambda (width)
-    (lambda (height)
+  (λ (width)
+    (λ (height)
       (* width height))))
 
 (define double-result-of-f
-  (lambda (f) 
-    (lambda (z)
+  (λ (f) 
+    (λ (z)
       (* 2 (f z)))))
 
 (define abs
-  (lambda (x)
+  (λ (x)
     (cond
       ((< x 0) (- 0 x))
       (else x))))
 
 ; warmup recursion
 (define remainder
-  (lambda (x y)
+  (λ (x y)
     (cond
       ((< x y) x)
       (else (remainder (- x y) y)))))
 
 (define add
-  (lambda (n m)
+  (λ (n m)
     (cond
       ((zero? m) n)
       (else (add1 (add n (sub1 m)))))))
@@ -46,47 +46,47 @@
 ; on to serious business:
 ; give us a line function in which we need to customize weight and bias 
 (define line
-  (lambda (x)
-    (lambda (theta)
+  (λ (x)
+    (λ (theta)
       (+ (* (ref theta 0) x) (ref theta 1)))))
 
 ; rank of tensor
 (define rank
-  (lambda (t)
+  (λ (t)
     (ranked t 0)))
 
 (define ranked
-  (lambda (t a)
+  (λ (t a)
     (cond
       ((scalar? t) a)
       (else (ranked (tref t 0) (add1 a))))))
 
 ; shape of tensor
 (define shape
-  (lambda (t)
+  (λ (t)
     (cond 
       ((scalar? t) '())
       (else (cons (tlen t) (shape (tref t 0)))))))
 
 ; product of list members
 (define product
-  (lambda (l)
+  (λ (l)
     (cond
       ((empty? l) 1)
       (else (* (car l) (product (cdr l)))))))
 
 ; we can use tensor shape to get the number of scalars
 (define nscalars
-  (lambda (t)
+  (λ (t)
     (product (shape t))))
 
 ; let's sum up a tensor-1
 (define sum-1
-  (lambda (t)
+  (λ (t)
     (summed t (sub1 (tlen t)) 0.0)))
 
 (define summed
-  (lambda (t i a)
+  (λ (t i a)
     (cond
-      ((< i 0) a)
+      ((zero? i) (+ a (tref t 0)))
       (else (summed t (sub1 i) (+ a (tref t i)))))))
