@@ -90,3 +90,13 @@
     (cond
       ((zero? i) (+ a (tref t 0)))
       (else (summed t (sub1 i) (+ a (tref t i)))))))
+
+; generalized loss function
+(define l2-loss
+  (λ (target)
+     (λ (xs ys)
+	(λ (ϴ)
+	   (let ((pred-ys ((target xs) ϴ)))
+	     (sum
+	       (sqr
+		 (- ys pred-ys))))))))
