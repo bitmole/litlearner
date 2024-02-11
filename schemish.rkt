@@ -100,3 +100,34 @@
 	     (sum
 	       (sqr
 		 (- ys pred-ys))))))))
+
+; revisions
+(define revise
+  (λ (f revs ϴ)
+     (cond
+       ((zero? revs) ϴ)
+       (else
+	 (revise f (sub1 revs) (f ϴ))))))
+
+; general form of map
+; accepts more than one list, and invokes its function
+; 	on corresponding members of each list
+(map (λ (x y) (+ x y))
+     '(1 2 3)
+     '(4 5 6))
+; '(5, 7, 9)
+
+; gradient descent!
+; takes objective function (l2-loss) and initial theta
+(define alpha 0.01)
+(define revs 1000)
+(define gradient-descent
+  (λ (obj ϴ)
+     (let ((f (λ (big-theta) ; revision function
+		 (map (λ (p g) (- p (* alpha g)))
+		      big-theta
+		      (gradient-of obj big-theta)))))
+       (revise f revs ϴ))))
+(gradient-descent 
+  ((l2-loss line) #(2.0 1.0 4.0 3.0) #(1.8 1.2 4.2 3.3)) ; obj function 
+  '(0.0 0.0))				                 ; initial theta
